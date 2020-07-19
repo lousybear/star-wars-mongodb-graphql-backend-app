@@ -1,18 +1,19 @@
-const expressGraphQL = require('express-graphql');
-const {
-    GraphQLID,
-    GraphQLString,
-    GraphQLList,
-    GraphQLObjectType,
-    GraphQLSchema,
-    GraphQLNonNull
-} = require('graphql');
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+var express = require('express');
+var { graphqlHTTP } = require('express-graphql');
+var { buildSchema } = require('graphql');
 
-const app = express();
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
 
-app.use(cors)
-app.use(bodyParser.json);
-app.use(bodyParser.urlencoded({extended: false}));
+var root = { hello: () => 'Hello world!' };
+
+var app = express();
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+app.listen(4000, () => console.log('Now browse to localhost:4000/graphql'));
