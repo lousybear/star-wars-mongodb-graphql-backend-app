@@ -3,6 +3,7 @@ import { buildSchema } from "graphql";
 const movieSchema = buildSchema(`
   type Query {
     movies: [Movie]
+    movieByName(name: String!): Movie
   }
 
   type Mutation {
