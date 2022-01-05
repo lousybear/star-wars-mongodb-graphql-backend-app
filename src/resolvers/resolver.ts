@@ -23,6 +23,7 @@ const resolvers = {
       name: args.name,
       genre: args.genre,
       year: args.year,
+      image: args.image,
     };
     mongoDb.collection("star_wars").insertOne(movie);
     return movie;
